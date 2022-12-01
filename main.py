@@ -1,7 +1,7 @@
-def dec1() -> tuple[int, int]:
+def dec1(file_name: str) -> tuple[int, int]:
     sums: list[int] = []
     count: int = 0
-    with open('input.txt') as f:
+    with open(file_name) as f:
         for line in f:
             if line == '\n':
                 sums.append(count)
@@ -14,4 +14,4 @@ def dec1() -> tuple[int, int]:
 
 
 if __name__ == '__main__':
-    print(dec1())
+    print(dec1('input.txt'))

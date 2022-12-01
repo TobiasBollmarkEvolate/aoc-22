@@ -1,21 +1,17 @@
-from typing import TextIO
-
-
-def dec1(f: TextIO) -> tuple[int, int]:
+def dec1() -> tuple[int, int]:
     sums: list[int] = []
     count: int = 0
-    for line_number, line in enumerate(f):
-        if line == '\n':
-            sums.append(count)
-            sums.sort()
-            sums = sums[-3:]
-            count = 0
-        else:
-            count += int(line)
-    sums.sort()
-    return sums[-1:][0], sum(sums)
+    with open('input.txt') as f:
+        for line in f:
+            if line == '\n':
+                sums.append(count)
+                sums.sort()
+                sums = sums[-3:]  # Only keep the top 3 in mmemory
+                count = 0
+            else:
+                count += int(line)
+        return sums[-1:][0], sum(sums)
 
 
 if __name__ == '__main__':
-    with open('input.txt') as fp:
-        print(dec1(fp))
+    print(dec1())

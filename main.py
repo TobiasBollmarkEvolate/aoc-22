@@ -25,9 +25,13 @@ def dec1_part2(data):
 
 
 if __name__ == '__main__':
+    # 1
     with open('input.txt') as f:
         lines = f.read().splitlines()
     result1 = dec1_part1(lines)
     print(result1)
     result2 = dec1_part2(lines)
     print(result2)
+
+    # 2
+

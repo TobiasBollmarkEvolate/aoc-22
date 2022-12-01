@@ -6,7 +6,7 @@ def dec1(file_name: str) -> tuple[int, int]:
             if line == '\n':
                 sums.append(count)
                 sums.sort()
-                sums = sums[-3:]  # Only keep the top 3 in mmemory
+                sums = sums[-3:]  # Only keep the top 3 in memory
                 count = 0
             else:
                 count += int(line)

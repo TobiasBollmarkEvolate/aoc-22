@@ -19,34 +19,38 @@ def dec2(file_name: str) -> int:
         "Y": 2,
         "Z": 3
     }
+    hand = {
+        "A": "rock",
+        "B": "paper",
+        "C": "scissors",
+        "X": "rock",
+        "Y": "paper",
+        "Z": "scissors"
+    }
+    beat = {
+        "rock": "scissors",
+        "paper": "rock",
+        "scissors": "paper"
+    }
 
-    def points(p1: str, p2: str):
-        if p1 == "A":  # Rock
-            if p2 == "Y":  # Paper
-                return 6
-            elif p2 == "Z":  # Scissors
-                return 0
-        elif p1 == "B":  # Paper
-            if p2 == "X":  # Rock
-                return 0
-            elif p2 == "Z":  # Scissors
-                return 6
-        elif p1 == "C":  # Scissors
-            if p2 == "X":  # Rock
-                return 6
-            elif p2 == "Y":  # Paper
-                return 0
-        return 3
+    def beats(h1, h2):
+        if h1 == h2:
+            return 3
+        if beat[h1] == h2:
+            return 0
+        return 6
 
-    def hand(i):
-        pass
+    def points_part1(p1: str, p2: str):
+        p1 = hand[p1]
+        p2 = hand[p2]
+        return beats(p1, p2)
 
-    score: int = 0
+    score_part1: int = 0
     with open(file_name) as f:
         for line in f:
-            opponent, player = line.split()
-            score += points(opponent, player) + player_points[player]
-    return score
+            a, x = line.split()
+            score_part1 += points_part1(a, x) + player_points[x]
+    return score_part1
 
 
 if __name__ == '__main__':

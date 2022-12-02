@@ -1,10 +1,10 @@
 def main(file_name: str) -> tuple[int, int]:
-    player_points = {
+    player_points: dict[str, int] = {
         "rock": 1,
         "paper": 2,
         "scissors": 3
     }
-    hand = {
+    hand: dict[str, str] = {
         "A": "rock",
         "B": "paper",
         "C": "scissors",
@@ -12,26 +12,26 @@ def main(file_name: str) -> tuple[int, int]:
         "Y": "paper",
         "Z": "scissors"
     }
-    strat = {
+    strat: dict[str, str] = {
         "X": "loose",
         "Y": "draw",
         "Z": "win"
     }
-    beat = {
+    beat: dict[str, str] = {
         "rock": "scissors",
         "paper": "rock",
         "scissors": "paper"
     }
-    loose = {v: k for k, v in beat.items()}  # Creates a reversed "beat"
+    loose: dict[str, str] = {v: k for k, v in beat.items()}  # Creates a reversed "beat"
 
-    def beats(h1, h2):
+    def beats(h1: str, h2: str) -> int:
         if h1 == h2:
             return 3
         if beat[h1] == h2:
             return 0
         return 6
 
-    def points_part2(p, s):
+    def points_part2(p: str, s: str) -> int:
         p = hand[p]
         s = strat[s]
         if s == "draw":

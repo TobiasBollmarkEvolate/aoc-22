@@ -1,19 +1,4 @@
-def dec1(file_name: str) -> tuple[int, int]:
-    sums: list[int] = []
-    count: int = 0
-    with open(file_name) as f:
-        for line in f:
-            if line == '\n':
-                sums.append(count)
-                sums.sort()
-                sums = sums[-3:]  # Only keep the top 3 in memory
-                count = 0
-            else:
-                count += int(line)
-        return sums[-1:][0], sum(sums)
-
-
-def dec2(file_name: str) -> tuple[int, int]:
+def main(file_name: str) -> tuple[int, int]:
     player_points = {
         "rock": 1,
         "paper": 2,
@@ -66,5 +51,4 @@ def dec2(file_name: str) -> tuple[int, int]:
 
 
 if __name__ == '__main__':
-    print(dec1('input1.txt'))
-    print(dec2('input2.txt'))
+    print(main('input.txt'))

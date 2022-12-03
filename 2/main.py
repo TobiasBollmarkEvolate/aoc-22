@@ -32,8 +32,6 @@ def main(file_name: str) -> tuple[int, int]:
         return 6
 
     def points_part2(p: str, s: str) -> int:
-        p = hand[p]
-        s = strat[s]
         if s == "draw":
             return 3 + player_points[p]
         elif s == "win":
@@ -46,7 +44,7 @@ def main(file_name: str) -> tuple[int, int]:
         for line in f:
             a, x = line.split()
             score_part1 += beats(hand[a], hand[x]) + player_points[hand[x]]
-            score_part2 += points_part2(a, x)
+            score_part2 += points_part2(hand[a], strat[x])
     return score_part1, score_part2
 
 

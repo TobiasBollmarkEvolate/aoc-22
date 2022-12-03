@@ -3,18 +3,12 @@ def get_score(char: str) -> int:
     return ascii_code - 96 if ascii_code > 96 else ascii_code - 38
 
 
-def split_middle(data: str) -> list[str]: # don't support odd number of chars
+def split_middle(data: str) -> list[str]:  # don't support odd number of chars
     middle: int = int(len(data) / 2)
     return [data[:middle], data[middle:]]
 
 
-def find_common_char(string1: str, string2: str) -> str:
-    for char in string1:
-        if char in string2:
-            return char
-
-
-def find_common_char_iterativly(strings: list[str], chars: list[str] = None):
+def find_common_char(strings: list[str], chars: list[str] = None):
     if chars is None:
         chars = strings.pop(0)
     for char in chars:
@@ -22,7 +16,7 @@ def find_common_char_iterativly(strings: list[str], chars: list[str] = None):
             strings.pop(0)
             if not strings:
                 return char
-            char = find_common_char_iterativly(strings, [char])
+            char = find_common_char(strings, [char])
             if char:
                 return char
     return False
@@ -41,7 +35,7 @@ def main(file_name: str) -> tuple[int, int]:
             line = line.strip('\n')
             # Part 1
             score1 += get_score(
-                find_common_char_iterativly(
+                find_common_char(
                     split_middle(line)
                 )
             )
@@ -50,7 +44,7 @@ def main(file_name: str) -> tuple[int, int]:
             line_counter += 1
             if line_counter % 3 == 0:
                 score2 += get_score(
-                    find_common_char_iterativly(lines)
+                    find_common_char(lines)
                 )
                 lines = []
     return score1, score2

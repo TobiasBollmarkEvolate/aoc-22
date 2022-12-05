@@ -1,3 +1,5 @@
+import copy
+
 CARGO: dict = {
     "1": ["Q", "F", "L", "S", "R"],
     "2": ["T", "P", "G", "Q", "Z", "N"],
@@ -15,9 +17,14 @@ class Cargo:
     def __init__(self, cargo: dict[str:list[str]]):
         self.cargo = cargo
 
-    def move(self, source: str, target: str, amount: int = 1):
+    def move(self, source: str, target: str, amount: int = 1, multi: bool = False):
+        in_move = []
         for i in range(amount):
-            self.cargo[target].insert(0, self.cargo[source].pop(0))
+            in_move.append((self.cargo[source].pop(0)))
+        if multi:
+            in_move.reverse()
+        for item in in_move:
+            self.cargo[target].insert(0, item)
 
     def __str__(self) -> str:
         ret: str = ""
@@ -26,13 +33,15 @@ class Cargo:
         return ret
 
 
-def main(file_name: str) -> tuple[str, int]:
-    cargo: Cargo = Cargo(CARGO)
+def main(file_name: str) -> tuple[str, str]:
+    cargo1: Cargo = Cargo(copy.deepcopy(CARGO))
+    cargo2: Cargo = Cargo(copy.deepcopy(CARGO))
     with open(file_name) as f:
         for line in f:
             words: list = line.split()
-            cargo.move(words[3], words[5], int(words[1]))
-    return str(cargo), 0
+            cargo1.move(words[3], words[5], int(words[1]))
+            cargo2.move(words[3], words[5], int(words[1]), multi=True)
+    return str(cargo1), str(cargo2)
 
 
 if __name__ == '__main__':

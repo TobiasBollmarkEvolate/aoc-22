@@ -1,6 +1,6 @@
 import copy
 
-CARGO: dict = {
+CARGOHOLD: dict = {
     "1": ["Q", "F", "L", "S", "R"],
     "2": ["T", "P", "G", "Q", "Z", "N"],
     "3": ["B", "Q", "M", "S"],
@@ -34,14 +34,14 @@ class Cargo:
 
 
 def main(file_name: str) -> tuple[str, str]:
-    cargo1: Cargo = Cargo(copy.deepcopy(CARGO))
-    cargo2: Cargo = Cargo(copy.deepcopy(CARGO))
+    part1: Cargo = Cargo(copy.deepcopy(CARGOHOLD))
+    part2: Cargo = Cargo(copy.deepcopy(CARGOHOLD))
     with open(file_name) as f:
         for line in f:
             words: list = line.split()
-            cargo1.move(words[3], words[5], int(words[1]))
-            cargo2.move(words[3], words[5], int(words[1]), multi=True)
-    return str(cargo1), str(cargo2)
+            part1.move(words[3], words[5], int(words[1]))
+            part2.move(words[3], words[5], int(words[1]), multi=True)
+    return str(part1), str(part2)
 
 
 if __name__ == '__main__':

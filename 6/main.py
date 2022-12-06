@@ -1,8 +1,8 @@
-def unique_list(data: list):
+def unique_list(data: list) -> bool:
     return len(data) == len(set(data))
 
 
-def unique_string(string: str, count: int = 4) -> int:
+def unique_string(string: str, count: int) -> int:
     chars: list[str] = list(string[:count])
     for char in string[count:]:
         chars.append(char)

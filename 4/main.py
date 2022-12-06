@@ -14,6 +14,12 @@ class Section:
 
 
 def string_to_sections(string: str) -> tuple[Section, Section]:
+    section_string1: str
+    section_string2: str
+    section1_mmin: str
+    section1_max: str
+    section2_min: str
+    section2_max: str
     section_string1, section_string2 = string.split(",")
     section1_min, section1_max = section_string1.split("-")
     section2_min, section2_max = section_string2.split("-")

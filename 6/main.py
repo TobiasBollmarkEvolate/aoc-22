@@ -2,18 +2,14 @@ def unique_list(data: list):
     return len(data) == len(set(data))
 
 
-def unique_string(string: str, no: int = 4):
-    counter: int = 0
-    chars: list[str] = []
-    for char in string:
-        counter += 1
+def unique_string(string: str, count: int = 4) -> int:
+    chars: list[str] = list(string[:count])
+    for char in string[count:]:
         chars.append(char)
-        if len(chars) < no:
-            continue
         if unique_list(chars):
-            break
+            return count
+        count += 1
         chars.pop(0)
-    return counter
 
 
 def main(file_name: str) -> tuple[int, int]:

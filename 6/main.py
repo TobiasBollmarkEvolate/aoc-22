@@ -19,7 +19,7 @@ def unique_string(string: str, no: int = 4):
 def main(file_name: str) -> tuple[int, int]:
     with open(file_name) as f:
         line = f.readline()
-    return unique_string(line, 4), unique_string(line, 14)
+    return unique_string(line, 4), unique_string(line, 14)  # Yes I'm looping the string twice here, lazy ;)
 
 
 if __name__ == '__main__':

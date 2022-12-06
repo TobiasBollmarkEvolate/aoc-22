@@ -1,24 +1,25 @@
 def unique_list(data: list):
-    print(data)
     return len(data) == len(set(data))
 
 
-def main(file_name: str) -> tuple[int, str]:
+def unique_string(string: str, no: int = 4):
+    counter: int = 0
+    chars: list[str] = []
+    for char in string:
+        counter += 1
+        chars.append(char)
+        if len(chars) < no:
+            continue
+        if unique_list(chars):
+            break
+        chars.pop(0)
+    return counter
+
+
+def main(file_name: str) -> tuple[int, int]:
     with open(file_name) as f:
-        instructions = []
-        counter = 0
-        while True:
-            char = f.read(1)
-            if not char:
-                break
-            counter += 1
-            instructions.append(char)
-            if len(instructions) < 4:
-                continue
-            if unique_list(instructions):
-                break
-            instructions.pop(0)
-    return counter, ""
+        line = f.readline()
+    return unique_string(line, 4), unique_string(line, 14)
 
 
 if __name__ == '__main__':

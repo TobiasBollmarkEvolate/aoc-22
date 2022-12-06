@@ -13,19 +13,14 @@ class Section:
         return section.low >= self.low >= section.high or section.low <= self.high <= section.high
 
 
-def string_to_sections(string: str) -> tuple[Section, Section]:
-    section_string1: str
-    section_string2: str
-    section1_mmin: str
-    section1_max: str
-    section2_min: str
-    section2_max: str
-    section_string1, section_string2 = string.split(",")
-    section1_min, section1_max = section_string1.split("-")
-    section2_min, section2_max = section_string2.split("-")
-    section1 = Section(int(section1_min), int(section1_max))
-    section2 = Section(int(section2_min), int(section2_max))
-    return section1, section2
+def string_to_sections(string: str) -> list[Section]:
+    sections: list[Section] = []
+    for section in string.split(","):
+        section_min: str
+        section_max: str
+        section_min, section_max = section.split("-")
+        sections.append(Section(int(section_min), int(section_max)))
+    return sections
 
 
 def main(file_name: str) -> tuple[int, int]:
@@ -33,10 +28,10 @@ def main(file_name: str) -> tuple[int, int]:
     count2: int = 0
     with open(file_name) as f:
         for line in f:
-            section1, section2 = string_to_sections(line)
-            if section1.contains(section2) or section2.contains(section1):
+            sections: list[Section] = string_to_sections(line)
+            if sections[0].contains(sections[1]) or sections[1].contains(sections[0]):
                 count1 += 1
-            elif section1.overlaps(section2) or section2.overlaps(section1):
+            elif sections[0].overlaps(sections[1]) or sections[1].overlaps(sections[0]):
                 count2 += 1
     return count1, count1 + count2
 

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __future__ import annotations  # Allows for typing of Section in Section method arguments (1)
 
 
 class Section:

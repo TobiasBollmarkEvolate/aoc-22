@@ -49,9 +49,10 @@ class File(FileSystemObject):
 
 
 class FileSystem:
-    def __init__(self):
+    def __init__(self, size: int = 0):
         self._root = FileSystemRoot()
         self._cwd: [FileSystemRoot | Directory] = self._root
+        self.total: int = size
 
     def cd(self, d: str):
         if d == "/":
@@ -79,6 +80,9 @@ class FileSystem:
                     ret.append(obj)
         return ret
 
+    def free(self):
+        return self.total - self._root.size
+
 
 def process_ls(file_system: FileSystem, f: typing.TextIO):
     while True:
@@ -99,7 +103,7 @@ def process_ls(file_system: FileSystem, f: typing.TextIO):
 
 
 def main(file_name: str) -> tuple[int, int]:
-    file_system = FileSystem()
+    file_system = FileSystem(size=70000000)
     with open(file_name) as f:
         while True:
             line = f.readline()
@@ -115,11 +119,15 @@ def main(file_name: str) -> tuple[int, int]:
                     process_ls(file_system, f)
     part1: int = 0
     file_system.cd("/")
+    free_space = file_system.free()
+    part2: int = file_system.total
     for d in file_system.find(d=None, dirs_only=True):
         if d.size < 100000:
             part1 += d.size
+        if d.size < part2 and free_space + d.size > 30000000:
+            part2 = d.size
 
-    return part1, 0
+    return part1, part2
 
 
 if __name__ == '__main__':

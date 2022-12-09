@@ -1,10 +1,18 @@
+import collections
+import itertools
+
+
 def check_row(row: list[int], position: int) -> bool:
     check_tree: int = row[position]
     left: bool = True
-    for i, tree in enumerate(row):
+    enum_row = enumerate(row)
+    for i, tree in enum_row:
         if tree >= check_tree:
             if i < position:
-                left = False  # TODO: optimize, we don't need to check more on the left side in this row
+                left = False
+                # Move the iterator to the first char after position
+                # https://docs.python.org/3/library/itertools.html#itertools-recipes
+                collections.deque(itertools.islice(enum_row, position - i))
             elif i > position:
                 return False
             elif left:
@@ -45,7 +53,9 @@ def main(file_name: str) -> tuple[int, int]:
             col_to_row: list = [x[j] for x in matrix]
             if check_row(line, j) or check_row(col_to_row, i + 1):
                 visible += 1
-            score: int = scenic_score_row(line, j) * scenic_score_row(col_to_row, i + 1)
+            score: int = scenic_score_row(line, j)
+            if score:
+                score *= scenic_score_row(col_to_row, i + 1)
             if score > max_score:
                 max_score = score
     return visible, max_score

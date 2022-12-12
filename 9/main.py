@@ -10,23 +10,28 @@ class Position:
         return str((self.x, self.y))
 
 
-def move(line, pos_h, pos_t):
+def move(line: str, rope: list[Position]):
     direction: str
     steps: int
-    positions: set = set()
+    positions2: set = set()
+    positions10: set = set()
     direction, steps = line.split()
     for _ in range(int(steps)):
         if direction == "L":
-            pos_h.x -= 1
+            rope[0].x -= 1
         elif direction == "R":
-            pos_h.x += 1
+            rope[0].x += 1
         elif direction == "U":
-            pos_h.y += 1
+            rope[0].y += 1
         elif direction == "D":
-            pos_h.y -= 1
-        follow(pos_h, pos_t)
-        positions.add(pos_t.cordinates())
-    return positions
+            rope[0].y -= 1
+        for i, pos in enumerate(rope[1:]):
+            follow(rope[i], pos)
+            if i == 0:
+                positions2.add(pos.cordinates())
+            elif i == 8:
+                positions10.add(pos.cordinates())
+    return positions2, positions10
 
 
 def follow(pos_h: Position, pos_t: Position):
@@ -54,13 +59,17 @@ def follow(pos_h: Position, pos_t: Position):
 
 
 def main(file_name: str) -> tuple[int, int]:
-    pos_h = Position(0, 0)
-    pos_t = Position(0, 0)
-    positions: set = set()
+    rope: list[Position] = []
+    for _ in range(10):
+        rope.append(Position(0, 0))
+    position2: set = set()
+    position10: set = set()
     with open(file_name) as f:
         for line in f:
-            positions.update(move(line.strip(), pos_h, pos_t))
-    return len(positions), 0
+            ret_position2, ret_position10 = move(line.strip(), rope)
+            position2.update(ret_position2)
+            position10.update(ret_position10)
+    return len(position2), len(position10)
 
 
 if __name__ == '__main__':
